@@ -103,7 +103,7 @@ df_path = pd.DataFrame(
 
 text = []
 for i in range(len(df_path)):
-    if i % 1000 == 0 and i != 0:
+    if i % 100000 == 0 and i != 0:
         print(str('We have passed unparsed text ') + str(i) + str('out of ') + str(len(df_path)))
     try:
         f = open(df_path.iloc[i].path, "r")
@@ -113,10 +113,11 @@ for i in range(len(df_path)):
 print('Unparsed text completed')
 
 df_path['unparsed_text'] = text
+text = []
 
 parse_text = []
 for i in range(len(df_path)):
-    if i % 1000 == 0 and i != 0:
+    if i % 100000 == 0 and i != 0:
         print(str('We have passed parsed text ') + str(i) + str('out of ') + str(len(df_path)))
     curent_list = []
     if df_path.iloc[i].unparsed_text != '':

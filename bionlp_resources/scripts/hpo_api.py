@@ -1,5 +1,6 @@
 import pickle
 import json 
+
 df = pickle.load(open('hpo_id_cui.p', 'rb'))
 diseases_list_dict = []
 genes_list_dict = []
