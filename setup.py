@@ -15,8 +15,11 @@ setuptools.setup(
     ],
     install_requires=[
 'pandas',
+'numpy',
 'requests',
-'numpy'
+'bs4',
+'urllib3',
+'wget'
 ],
     python_requires='>=3.6'
 )
