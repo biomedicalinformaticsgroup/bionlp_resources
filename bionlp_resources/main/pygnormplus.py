@@ -5,8 +5,11 @@ import multiprocessing as mp
 
 def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_dir_path):
     for i in range(len(my_list)):
-        if (i % int(round(len(my_list))/10) == 0 or i+1 == len(my_list)) and i != 0: 
-            print(str(f'We have annotated: ') + str(round((i/len(my_list))*100)) + str('%' +  ' of the input directory.'))
+        if len(my_list) > 9:
+            if (i % int(round(len(my_list))/10) == 0 or (i+1 == len(my_list)) and i-1 % int(round(len(my_list))/10) != 0) and i != 0: 
+                print(str(f'We have annotated: ') + str(round((i/len(my_list))*100)) + str('%' +  ' of the input directory.'))
+        else:
+            print(str(f'We have annotated file number : ') + str(i) + str('out of ') + str(len(my_list)))
         f = open(f"{input_dir_path}/{my_list[i]}", "r")
         my_str = f.readline()
         try:
