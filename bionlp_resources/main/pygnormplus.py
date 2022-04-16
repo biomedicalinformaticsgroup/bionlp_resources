@@ -9,7 +9,7 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
             if (i % int(round(len(my_list))/10) == 0 or (i+1 == len(my_list)) and i-1 % int(round(len(my_list))/10) != 0) and i != 0: 
                 print(str(f'We have annotated: ') + str(round((i/len(my_list))*100)) + str('%' +  ' of the input directory.'))
         else:
-            print(str(f'We have annotated file number : ') + str(i) + str('out of ') + str(len(my_list)))
+            print(str(f'We are annotating file number : ') + str(i+1) + str(' out of ') + str(len(my_list)))
         f = open(f"{input_dir_path}/{my_list[i]}", "r")
         my_str = f.readline()
         try:
@@ -20,9 +20,9 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
         f = open(f"./temp_input/{my_list[i]}", "w")
         f.write(f"{my_list[i].split('.')[0]}|t|{my_str}\n\n")
         f.close()
-        subprocess.check_call(['java', '-Xmx5G', '-Xms5G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input', pwd+'/temp_output'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
+        subprocess.check_call(['java', '-Xmx10G', '-Xms10G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input', pwd+'/temp_output'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
         current_doc = []
-        f = open(f"./temp_output/{my_list[i]}.PubTator", "r")
+        f = open(f"./temp_output/{my_list[i]}", "r")
         for x in f:
             current_doc.append(x)
         current_doc = current_doc[1:]
@@ -37,6 +37,7 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
                 current_line.append(current_doc[j].split('\t')[2])
                 current_line.append(current_doc[j].split('\t')[3])
                 current_line.append(current_doc[j].split('\t')[4])
+                current_line.append(current_doc[j].split('\t')[5].replace('\n', ''))
                 total_doc.append(current_line)
         for k in range(len(total_doc)):
             f = open(f"{output_dir_path}/output_tmVar/{my_list[i]}", "a")
@@ -46,12 +47,20 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
         if len(total_doc) == 0:
             f = open(f"{output_dir_path}/output_tmVar/{my_list[i]}", "a")
             f.write(str([]))
+        try:
+            shutil.rmtree('./temp_input')
+        except:
+            pass
+        try:
+            shutil.rmtree('./temp_output')
+        except:
+            pass
 
 def pygnormplus(soft_dir_path, input_dir_path, output_dir_path = './'):
     pwd = os.getcwd()
     try:
         os.mkdir(f'{output_dir_path}/output_tmVar')
-        list_done = []
+        list_done_filtered = []
     except:
         list_done = subprocess.getstatusoutput(f"ls -lR {output_dir_path}/output_tmVar")
         list_done = list(list_done)
@@ -61,6 +70,10 @@ def pygnormplus(soft_dir_path, input_dir_path, output_dir_path = './'):
         for i in range(len(list_done)):
             my_list.append(list_done[i])
         list_done = my_list
+        list_done_filtered = []
+        for i in range(len(list_done)):
+            if '.txt' in list_done[i].split()[-1] :
+                list_done_filtered.append(list_done[i].split()[-1])
     try:
         shutil.rmtree('./temp_input')
     except:
@@ -78,9 +91,14 @@ def pygnormplus(soft_dir_path, input_dir_path, output_dir_path = './'):
     for i in range(len(command)):
         my_list.append(command[i])
     
-    if list_done != []:
-        my_list = list(set(my_list) - set(list_done))
+    my_list_filtered = []
+    for i in range(len(my_list)):
+        if '.txt' in my_list[i].split()[-1] :
+            my_list_filtered.append(my_list[i].split()[-1])
+    
+    if list_done_filtered != []:
+        my_list_filtered = list(set(my_list_filtered) - set(list_done_filtered))
 
-    annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_dir_path)
+    annotation_func_tmVar(my_list_filtered, soft_dir_path, pwd, input_dir_path, output_dir_path)
 
     print('Process completed')
