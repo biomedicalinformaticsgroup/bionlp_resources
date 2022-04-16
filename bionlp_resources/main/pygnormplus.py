@@ -20,7 +20,7 @@ def annotation_func_gnormplus(my_list, soft_dir_path, pwd, input_dir_path, outpu
         f = open(f"./temp_input_gnormplus/{my_list[i]}", "w")
         f.write(f"{my_list[i].split('.')[0]}|t|{my_str}\n\n")
         f.close()
-        subprocess.check_call(['java', '-Xmx10G', '-Xms10G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input', pwd+'/temp_output'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
+        subprocess.check_call(['java', '-Xmx10G', '-Xms10G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input_gnormplus', pwd+'/temp_output_gnormplus'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
         current_doc = []
         f = open(f"./temp_output_gnormplus/{my_list[i]}", "r")
         for x in f:

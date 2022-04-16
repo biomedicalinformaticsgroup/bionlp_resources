@@ -20,7 +20,7 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
         f = open(f"./temp_input_tmvar/{my_list[i]}", "w")
         f.write(f"{my_list[i].split('.')[0]}|t|{my_str}\n\n")
         f.close()
-        subprocess.check_call(['java', '-Xmx5G', '-Xms5G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input', pwd+'/temp_output'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
+        subprocess.check_call(['java', '-Xmx5G', '-Xms5G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input_tmvar', pwd+'/temp_output_tmvar'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
         current_doc = []
         f = open(f"./temp_output_tmvar/{my_list[i]}.PubTator", "r")
         for x in f:
