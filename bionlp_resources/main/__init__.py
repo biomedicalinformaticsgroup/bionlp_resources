@@ -3,3 +3,4 @@ from bionlp_resources.main.cui_to_sab import cui_to_sab
 from bionlp_resources.main.pmc_oa_generation import pmc_oa_generation
 from bionlp_resources.main.tuis_to_semantics import tuis_to_semantics
 from bionlp_resources.main.pygnormplus import pygnormplus
+from bionlp_resources.main.pytmvar import pytmvar
