@@ -40,12 +40,12 @@ def annotation_func_gnormplus(my_list, soft_dir_path, pwd, input_dir_path, outpu
                 current_line.append(current_doc[j].split('\t')[5].replace('\n', ''))
                 total_doc.append(current_line)
         for k in range(len(total_doc)):
-            f = open(f"{output_dir_path}/output_gnormplus_gnormplus/{my_list[i]}", "a")
+            f = open(f"{output_dir_path}/output_gnormplus/{my_list[i]}", "a")
             f.write(str(total_doc[k]))
             if k < len(total_doc)-1:
                 f.write('\n')
         if len(total_doc) == 0:
-            f = open(f"{output_dir_path}/output_gnormplus_gnormplus/{my_list[i]}", "a")
+            f = open(f"{output_dir_path}/output_gnormplus/{my_list[i]}", "a")
             f.write(str([]))
         try:
             shutil.rmtree('./temp_input_gnormplus')
