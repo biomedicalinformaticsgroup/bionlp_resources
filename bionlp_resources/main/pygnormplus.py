@@ -3,7 +3,7 @@ import os
 import shutil
 import multiprocessing as mp
 
-def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_dir_path):
+def annotation_func_gnormplus(my_list, soft_dir_path, pwd, input_dir_path, output_dir_path):
     for i in range(len(my_list)):
         if len(my_list) > 9:
             if (i % int(round(len(my_list))/10) == 0 or (i+1 == len(my_list)) and i-1 % int(round(len(my_list))/10) != 0) and i != 0: 
@@ -13,16 +13,16 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
         f = open(f"{input_dir_path}/{my_list[i]}", "r")
         my_str = f.readline()
         try:
-            os.mkdir(f'./temp_input')
-            os.mkdir(f'./temp_output')
+            os.mkdir(f'./temp_input_gnormplus')
+            os.mkdir(f'./temp_output_gnormplus')
         except:
             pass
-        f = open(f"./temp_input/{my_list[i]}", "w")
+        f = open(f"./temp_input_gnormplus/{my_list[i]}", "w")
         f.write(f"{my_list[i].split('.')[0]}|t|{my_str}\n\n")
         f.close()
         subprocess.check_call(['java', '-Xmx10G', '-Xms10G', '-jar', soft_dir_path.split('/')[-1], pwd+f'/temp_input', pwd+'/temp_output'], cwd='/'.join(soft_dir_path.split('/')[:-1]))
         current_doc = []
-        f = open(f"./temp_output/{my_list[i]}", "r")
+        f = open(f"./temp_output_gnormplus/{my_list[i]}", "r")
         for x in f:
             current_doc.append(x)
         current_doc = current_doc[1:]
@@ -40,29 +40,29 @@ def annotation_func_tmVar(my_list, soft_dir_path, pwd, input_dir_path, output_di
                 current_line.append(current_doc[j].split('\t')[5].replace('\n', ''))
                 total_doc.append(current_line)
         for k in range(len(total_doc)):
-            f = open(f"{output_dir_path}/output_tmVar/{my_list[i]}", "a")
+            f = open(f"{output_dir_path}/output_gnormplus_gnormplus/{my_list[i]}", "a")
             f.write(str(total_doc[k]))
             if k < len(total_doc)-1:
                 f.write('\n')
         if len(total_doc) == 0:
-            f = open(f"{output_dir_path}/output_tmVar/{my_list[i]}", "a")
+            f = open(f"{output_dir_path}/output_gnormplus_gnormplus/{my_list[i]}", "a")
             f.write(str([]))
         try:
-            shutil.rmtree('./temp_input')
+            shutil.rmtree('./temp_input_gnormplus')
         except:
             pass
         try:
-            shutil.rmtree('./temp_output')
+            shutil.rmtree('./temp_output_gnormplus')
         except:
             pass
 
 def pygnormplus(soft_dir_path, input_dir_path, output_dir_path = './'):
     pwd = os.getcwd()
     try:
-        os.mkdir(f'{output_dir_path}/output_tmVar')
+        os.mkdir(f'{output_dir_path}/output_gnormplus')
         list_done_filtered = []
     except:
-        list_done = subprocess.getstatusoutput(f"ls -lR {output_dir_path}/output_tmVar")
+        list_done = subprocess.getstatusoutput(f"ls -lR {output_dir_path}/output_gnormplus")
         list_done = list(list_done)
         list_done = list_done[1]
         list_done = str(list_done).split('\n')
@@ -75,11 +75,11 @@ def pygnormplus(soft_dir_path, input_dir_path, output_dir_path = './'):
             if '.txt' in list_done[i].split()[-1] :
                 list_done_filtered.append(list_done[i].split()[-1])
     try:
-        shutil.rmtree('./temp_input')
+        shutil.rmtree('./temp_input_gnormplus')
     except:
         pass
     try:
-        shutil.rmtree('./temp_output')
+        shutil.rmtree('./temp_output_gnormplus')
     except:
         pass
 
@@ -99,6 +99,6 @@ def pygnormplus(soft_dir_path, input_dir_path, output_dir_path = './'):
     if list_done_filtered != []:
         my_list_filtered = list(set(my_list_filtered) - set(list_done_filtered))
 
-    annotation_func_tmVar(my_list_filtered, soft_dir_path, pwd, input_dir_path, output_dir_path)
+    annotation_func_gnormplus(my_list_filtered, soft_dir_path, pwd, input_dir_path, output_dir_path)
 
     print('Process completed')
