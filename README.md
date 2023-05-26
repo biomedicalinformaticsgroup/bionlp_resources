@@ -1,5 +1,5 @@
 # bionlp_resources
-Repository where we can keep scripts related to other projects developed by the [biomedicalinformaticsgroup](https://github.com/biomedicalinformaticsgroup/ParallelPyMetaMap). This repository also has small bionlp project.
+Repository where we can keep scripts related to other projects developed by the [biomedicalinformaticsgroup](https://github.com/biomedicalinformaticsgroup). This repository also has small bionlp project.
 
 ## Installation
 bionlp_resources has dependencies on other Python packages, it is recommended to install it in an isolated environment
@@ -34,7 +34,7 @@ This function is to create a table to map HPO identidifier to their correspondin
 - hpo_value, it is the name associated to the HPO ID.
 - cui, it is the coresponding UMLS CUI link to that hpo_id. One hpo_id can have multiple CUIs. Each one will be reporting on a different line. 
 
-The function has only one parameter called 'path'. The default value is './' which means that the generated table will be saved on the current directory where the function is run in. Changing the default value is saving the file to the given directory.
+The function has only one parameter called 'path'. The default value is './' which means that the generated table will be saved on the current directory where the function is run in. Changing the default value allow to save the file to the given directory.
 
 ```python
 import pickle
@@ -65,3 +65,15 @@ First you will need to download and install the Java version of the tools availa
 ### PytmVar
 
 ### Generating the table for TUIs to semantics group and type
+
+## BioNLP Data retrieval 
+
+You can finb our GitHub automation to retrieve and parse PubMed abstract called [pm_abs_extr](https://github.com/biomedicalinformaticsgroup/pm_abs_extr).
+
+You can finb our GitHub automation to retrieve and parse PubMed Central Open Access publications called [oa_pmc_extr](https://github.com/biomedicalinformaticsgroup/oa_pmc_extr).
+
+You can find our GitHub automation to retrieve and parse full text publications from PubMed Query called [cadmus](https://github.com/biomedicalinformaticsgroup/cadmus).
+
+## Biomedical named entity recognition 
+
+You can finb our GitHub project to use in parallel multiple MetaMap instances to annotate free text using the UMLS, more details can be find in our GitHub page [ParallelPyMetaMap](https://github.com/biomedicalinformaticsgroup/ParallelPyMetaMap).
