@@ -44,36 +44,6 @@ hpo_id_cui_df = pickle.load(open('{YOUR_PATH}/hpo_id_cui.p', 'rb'))
 ### Mapping the CUI to their corresponding [Source Abbreviation](https://www.nlm.nih.gov/research/umls/sourcereleasedocs/index.html)
 
 
-
-### Pubmed Central Open Access Corpus Generation 
-
-```python
-from bionlp_resources import pmc_oa_generation
-
-pmc_oa_generation(
-    path = './'
-)
-```
-
-This script is to generate a DataFrame saved as a pickle object as well as a directory that contains all the open access publications indexed in [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc/). The function is collecting the publications using the ftp page available [here](https://ftp.ncbi.nlm.nih.gov/pub/pmc/).
-
-The funtion has only one optional parameter called 'path'. This parameter is to identify where to save the result. The default value is './' also known as the current directory. 
-
-Once the function is called it will create a directory '{YOUR_PATH}/pmc_oabulk_output_{TODAY_DATE}'. Inside this directory you will find:
-- /zip_files, it contains all the tgz files from the ftp request. 
-- /unzip_files, it contain all the extracted files from the ftp request. 
-- /pmcid_subdirect.txt, this txt file references all the subdirectories and files present in the unzip_files directory. For example, you can find the path to a specific PMCID (PubMed Central Identifier).
-- /PMC_oa_full_text.p, this pickle object is a Pandas DataFrame with 4 columns:
-  - pmcid (PubMed Central Identifier)
-  - path, it is the relative path to the file from the output. 
-  - unparsed_text, the content from the PMCID txt file we got from the ftp request without parsing or operation to change its content.
-  - parsed_text,  the content from the PMCID txt file we got from the ftp request that is present between the 'Body' and 'Refs'. We also remove the unicode and tags. 
-
-```python
-import pickle
-pmc_oa_df = pickle.load(open('{YOUR_PATH}/pmc_oabulk_output_{TODAY_DATE}/PMC_oa_full_text.p', 'rb'))
-```
-
 ### PyGNormPlus
 
 ```python
